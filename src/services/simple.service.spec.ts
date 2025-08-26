@@ -6,10 +6,11 @@ import {TempSecondService} from './temp-second.service';
 describe('SimpleService', () => {
   let service: SimpleService;
   let secondServiceSpy: jasmine.SpyObj<TempSecondService>;
+  // Создаем мок для TempSecondService
+  const spy = jasmine.createSpyObj('TempSecondService', ['check', 'toasterInfo']);
 
   beforeEach(() => {
-    // Создаем мок для TempSecondService
-    const spy = jasmine.createSpyObj('TempSecondService', ['check']);
+
 
     TestBed.configureTestingModule({
       providers: [
@@ -36,13 +37,34 @@ describe('SimpleService', () => {
     expect(service.sum(13)).toBeUndefined();
   });
 
-  it('checkInSecondService() should return true', () => {
-    secondServiceSpy.check.and.returnValue(true);
 
-    const result = service.checkInSecondService();
+  describe('Spy functions', () => {
 
-    expect(secondServiceSpy.check).toHaveBeenCalled();
-    expect(result).toBe(true);
+    it('call callCheckInSecondService() should call check() in SecondService', () => {
+      service.callCheckInSecondService();
+      expect(secondServiceSpy.check).toHaveBeenCalled();
+    });
+
+    it('callCheckInSecondService() expected to called only once', () => {
+      secondServiceSpy.check.calls.reset(); // reset calls
+
+      service.callCheckInSecondService();
+      expect(secondServiceSpy.check).toHaveBeenCalled();
+      expect(secondServiceSpy.check).toHaveBeenCalledTimes(1);
+    })
+
+    it('checkInSecondService() should return true', () => {
+      secondServiceSpy.check.and.returnValue(true);
+
+      const result = service.checkInSecondService();
+      expect(secondServiceSpy.check).toHaveBeenCalled();
+      expect(result).toBe(true);
+    });
+
+    it('sendInfoMessage() should call sendInfoMessage() with same attribute value', () => {
+      service.sendInfoMessage('test13');
+      expect(secondServiceSpy.toasterInfo).toHaveBeenCalledWith('test13');
+    })
   });
 
 });

@@ -19,4 +19,11 @@ export class SimpleService {
     return this.secondService.check();
   }
 
+  callCheckInSecondService() {
+    this.secondService.check();
+  }
+
+  sendInfoMessage(message: string): void {
+    this.secondService.toasterInfo(message);
+  }
 }

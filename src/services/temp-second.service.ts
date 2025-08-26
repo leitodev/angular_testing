@@ -7,4 +7,7 @@ export class TempSecondService {
   check() {
     return true;
   }
+  toasterInfo(message: string) {
+    alert(message)
+  }
 }
