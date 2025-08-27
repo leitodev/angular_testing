@@ -62,6 +62,14 @@ describe('FirstComponent', () => {
     expect(spanName).toBeTruthy();
   });
 
+  it('set name after some timer (60000) ', () => {
+    jasmine.clock().install();
+    component.setNameAfterMinute('John');
+    jasmine.clock().tick(60000);
+    expect(component.firstName).toEqual('John');
+    jasmine.clock().uninstall();
+  });
+
 
 });
 // https://youtu.be/Kj9Z4HFWlv4?t=1971

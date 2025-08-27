@@ -13,4 +13,10 @@ export class FirstComponent {
   sendName() {
     this.sendNameEvent.emit(this.firstName);
   }
+
+  setNameAfterMinute(name: string) {
+    setTimeout(() => {
+      this.firstName = name;
+    }, 60000)
+  }
 }
